@@ -1,0 +1,2609 @@
+<!DOCTYPE html>
+<html lang="af">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>STOMPI Meester</title>
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Nunito:wght@600;700;800;900&display=swap");
+
+        :root {
+            --bg-cream: #fff6ea;
+            --ink: #10214e;
+            --sky: #e5f0ff;
+            --navy: #132a63;
+            --navy-deep: #0d1e4d;
+            --card: rgba(255, 255, 255, 0.9);
+            --shadow-soft: 0 22px 55px rgba(22, 37, 84, 0.18);
+            --shadow-tight: 0 12px 30px rgba(18, 33, 76, 0.18);
+            --green: #72d71a;
+            --green-dark: #3a9c0f;
+            --gold: #ffcf32;
+            --cream-panel: linear-gradient(180deg, #fffefc 0%, #fff4df 100%);
+            --ocean: linear-gradient(180deg, #cde7ff 0%, #8fd0ff 48%, #73baf4 100%);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            margin: 0;
+            min-height: 100%;
+        }
+
+        body {
+            font-family: "Nunito", sans-serif;
+            color: var(--ink);
+            background:
+                radial-gradient(circle at top left, rgba(255, 181, 128, 0.22), transparent 28%),
+                radial-gradient(circle at top right, rgba(152, 180, 255, 0.22), transparent 24%),
+                radial-gradient(circle at bottom left, rgba(255, 232, 178, 0.4), transparent 22%),
+                linear-gradient(180deg, #fff9f1 0%, #fffaf6 46%, #f3f8ff 100%);
+            touch-action: manipulation;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        button {
+            font: inherit;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .page-shell {
+            max-width: 1460px;
+            margin: 0 auto;
+            padding: 18px 20px 28px;
+        }
+
+        .hero-copy {
+            text-align: center;
+            margin-bottom: 18px;
+        }
+
+        .hero-copy h1 {
+            margin: 0;
+            font-family: "Baloo 2", cursive;
+            font-size: clamp(2rem, 3.7vw, 3.9rem);
+            line-height: 0.94;
+            letter-spacing: 0.01em;
+            color: #0f1d4f;
+            text-shadow: 0 3px 0 rgba(255, 255, 255, 0.9);
+        }
+
+        .hero-copy p {
+            margin: 4px 0 0;
+            color: #2564d9;
+            font-size: clamp(1rem, 1.8vw, 1.7rem);
+            font-weight: 900;
+        }
+
+        .title-flag {
+            display: inline-flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .flag-chip {
+            width: 34px;
+            height: 24px;
+            border-radius: 7px;
+            border: 2px solid rgba(15, 29, 79, 0.12);
+            background:
+                linear-gradient(150deg, transparent 0 34%, white 34% 39%, #db1f26 39% 47%, white 47% 52%, transparent 52%),
+                linear-gradient(30deg, transparent 0 34%, white 34% 39%, #002395 39% 47%, white 47% 52%, transparent 52%),
+                linear-gradient(90deg, #101010 0 28%, #ffb612 28% 33%, #007a4d 33% 64%, #ffffff 64% 69%, #de3831 69% 84%, #002395 84% 100%);
+            box-shadow: 0 6px 14px rgba(17, 31, 73, 0.14);
+            flex: 0 0 auto;
+        }
+
+        .flag-chip.small {
+            width: 28px;
+            height: 20px;
+            border-radius: 6px;
+        }
+
+        .app-frame {
+            position: relative;
+            overflow: hidden;
+            border-radius: 42px;
+            border: 4px solid rgba(16, 33, 78, 0.92);
+            box-shadow:
+                0 0 0 6px rgba(255, 255, 255, 0.75),
+                0 30px 80px rgba(16, 26, 61, 0.26);
+            background:
+                linear-gradient(180deg, rgba(255, 255, 255, 0.15), transparent 14%),
+                linear-gradient(180deg, #dcebff 0%, #edf5ff 36%, #fff9ef 78%, #fff5df 100%);
+        }
+
+        .top-hud {
+            display: grid;
+            grid-template-columns: 236px minmax(0, 1fr) 232px;
+            gap: 14px;
+            align-items: center;
+            padding: 15px 18px 13px;
+            background: linear-gradient(180deg, #182f6b 0%, #101f4f 100%);
+            color: white;
+        }
+
+        .brand-lockup {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-mark {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 74px;
+            padding: 10px 16px 8px;
+            border-radius: 24px;
+            background: linear-gradient(180deg, #1f468f 0%, #183979 100%);
+            border: 2px solid rgba(255, 255, 255, 0.14);
+            box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.22);
+        }
+
+        .brand-mark strong {
+            font-family: "Baloo 2", cursive;
+            font-size: 1.95rem;
+            line-height: 0.8;
+            color: white;
+            text-shadow:
+                2px 2px 0 #1853a0,
+                -2px 2px 0 #1853a0,
+                0 3px 0 rgba(5, 18, 55, 0.3);
+        }
+
+        .brand-mark span {
+            align-self: flex-start;
+            margin-top: 6px;
+            padding: 2px 10px;
+            border-radius: 999px;
+            background: linear-gradient(180deg, #8b5cf6 0%, #6d37df 100%);
+            font-size: 0.84rem;
+            font-weight: 900;
+        }
+
+        .hud-stats {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .hud-card {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-height: 72px;
+            padding: 11px 14px;
+            border-radius: 24px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.04));
+            border: 2px solid rgba(255, 255, 255, 0.08);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14);
+        }
+
+        .hud-copy {
+            min-width: 0;
+        }
+
+        .hud-icon {
+            display: grid;
+            place-items: center;
+            width: 44px;
+            height: 44px;
+            border-radius: 16px;
+            font-size: 1.55rem;
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .hud-card strong {
+            display: block;
+            font-size: 1.74rem;
+            line-height: 0.94;
+            letter-spacing: -0.02em;
+            font-weight: 900;
+        }
+
+        .hud-card span {
+            display: block;
+            margin-top: 3px;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.86rem;
+            line-height: 1.08;
+            font-weight: 700;
+        }
+
+        .sentence-progress-bar {
+            width: 100%;
+            height: 16px;
+            margin-top: 8px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.14);
+            overflow: hidden;
+        }
+
+        .sentence-progress-fill {
+            height: 100%;
+            width: 10%;
+            border-radius: inherit;
+            background: linear-gradient(90deg, #9aff48 0%, #ffee54 100%);
+            box-shadow: 0 0 10px rgba(154, 255, 72, 0.5);
+        }
+
+        .profile-box {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 12px;
+        }
+
+        .profile-avatar {
+            display: grid;
+            place-items: center;
+            width: 66px;
+            height: 66px;
+            border-radius: 50%;
+            border: 4px solid rgba(255, 255, 255, 0.92);
+            background:
+                radial-gradient(circle at 30% 28%, #ffe77a 0%, #f7b732 28%, #d46f15 55%, #8e3b08 100%);
+            box-shadow: var(--shadow-tight);
+            font-size: 2rem;
+        }
+
+        .profile-copy strong {
+            display: block;
+            font-size: 1.5rem;
+            line-height: 1;
+            font-weight: 900;
+        }
+
+        .profile-copy span {
+            display: block;
+            margin-top: 4px;
+            color: #ffee8d;
+            font-size: 1rem;
+            font-weight: 900;
+        }
+
+        .icon-button {
+            display: grid;
+            place-items: center;
+            width: 52px;
+            height: 52px;
+            border: 0;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.12);
+            color: white;
+            font-size: 1.5rem;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14);
+        }
+
+        .worksheet-strip {
+            display: grid;
+            grid-template-columns: minmax(290px, 1.06fr) minmax(310px, 1.18fr) minmax(250px, 0.96fr) minmax(250px, 0.96fr) minmax(300px, 1.02fr);
+            align-items: stretch;
+            gap: 14px;
+            padding: 18px 20px 14px;
+        }
+
+        .worksheet-card,
+        .challenge-card,
+        .world-card {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            min-width: 0;
+            min-height: 102px;
+            padding: 16px 18px;
+            border: 2px solid rgba(92, 122, 190, 0.2);
+            border-radius: 26px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(229, 238, 255, 0.88));
+            box-shadow: var(--shadow-tight);
+        }
+
+        .worksheet-card > div:last-child,
+        .challenge-card > div:last-child,
+        .world-card > div:last-child {
+            min-width: 0;
+        }
+
+        .card-copy {
+            min-width: 0;
+            flex: 1 1 auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .worksheet-card {
+            cursor: pointer;
+            text-align: left;
+        }
+
+        .worksheet-card.is-active {
+            border-color: #7e7cff;
+            box-shadow:
+                0 14px 26px rgba(86, 98, 255, 0.18),
+                0 0 0 4px rgba(129, 138, 255, 0.16);
+        }
+
+        .worksheet-card.is-locked {
+            cursor: not-allowed;
+            opacity: 0.55;
+            filter: grayscale(0.1);
+        }
+
+        .card-badge {
+            display: grid;
+            place-items: center;
+            width: 58px;
+            height: 58px;
+            border-radius: 18px;
+            font-size: 2rem;
+            background: linear-gradient(180deg, #fffefb 0%, #d8e7ff 100%);
+            box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.85);
+        }
+
+        .worksheet-title {
+            display: -webkit-box;
+            min-height: calc(var(--worksheet-title-size, 1.55rem) * 2.08);
+            overflow: hidden;
+            font-size: var(--worksheet-title-size, 1.55rem);
+            line-height: 1.06;
+            letter-spacing: -0.02em;
+            font-weight: 900;
+            color: #1a2b67;
+            text-wrap: balance;
+            overflow-wrap: normal;
+            word-break: keep-all;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+        }
+
+        .nowrap {
+            white-space: nowrap;
+        }
+
+        .worksheet-card span,
+        .challenge-card span,
+        .world-card span {
+            display: block;
+            margin-top: 8px;
+            color: #4a5f9f;
+            font-size: 0.98rem;
+            line-height: 1.08;
+            font-weight: 700;
+        }
+
+        .worksheet-card.is-locked {
+            padding-right: 34px;
+        }
+
+        .lock-mark {
+            position: absolute;
+            top: 12px;
+            right: 14px;
+            font-size: 1rem;
+        }
+
+        .challenge-card {
+            background: linear-gradient(180deg, #fffdf7 0%, #fff3d9 100%);
+        }
+
+        .play-area {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 250px;
+            gap: 16px;
+            padding: 4px 20px 18px;
+            align-items: start;
+        }
+
+        .board-column {
+            min-width: 0;
+        }
+
+        .instruction-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+            padding: 14px 18px;
+            border-radius: 24px;
+            border: 2px solid rgba(123, 146, 201, 0.22);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.97), rgba(243, 247, 255, 0.92));
+            box-shadow: var(--shadow-tight);
+        }
+
+        .instruction-copy {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .info-pill {
+            display: grid;
+            place-items: center;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(180deg, #d7e8ff 0%, #93b8ff 100%);
+            color: #234db6;
+            font-weight: 900;
+            font-size: 1.65rem;
+        }
+
+        .instruction-copy strong {
+            display: block;
+            font-size: 1.55rem;
+            line-height: 1.1;
+            font-weight: 900;
+        }
+
+        .instruction-copy span {
+            display: block;
+            margin-top: 6px;
+            color: #3556af;
+            font-size: 1rem;
+            font-weight: 800;
+        }
+
+        .hint-button {
+            border: 0;
+            border-radius: 18px;
+            padding: 12px 16px;
+            background: linear-gradient(180deg, #5f98ff 0%, #2d6bff 100%);
+            color: white;
+            font-weight: 900;
+            font-size: 1rem;
+            box-shadow: 0 10px 18px rgba(45, 107, 255, 0.24);
+        }
+
+        .lanes-board {
+            margin-top: 12px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+        }
+
+        .lanes-grid {
+            display: grid;
+            grid-template-columns: repeat(8, minmax(122px, 1fr));
+            gap: 12px;
+            min-width: 1048px;
+        }
+
+        .lane-card {
+            display: flex;
+            flex-direction: column;
+            min-height: 306px;
+            border-radius: 28px;
+            padding: 0;
+            background: var(--lane-soft);
+            border: 2px solid var(--lane-border);
+            box-shadow: 0 14px 22px var(--lane-shadow);
+            overflow: hidden;
+        }
+
+        .lane-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            padding: 10px 8px 12px;
+            border-radius: 24px 24px 18px 18px;
+            background: linear-gradient(180deg, var(--lane-main), var(--lane-main-dark));
+            color: white;
+            text-align: center;
+            box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.26);
+        }
+
+        .lane-content {
+            display: flex;
+            flex: 1 1 auto;
+            flex-direction: column;
+            gap: 10px;
+            padding: 10px 10px 12px;
+        }
+
+        .lane-symbol {
+            font-size: 2.35rem;
+            line-height: 0.9;
+            font-weight: 900;
+        }
+
+        .lane-title {
+            font-size: 0.98rem;
+            line-height: 1.02;
+            font-weight: 900;
+            white-space: nowrap;
+        }
+
+        .lane-subtitle {
+            font-size: 0.8rem;
+            line-height: 1;
+            font-weight: 800;
+            opacity: 0.92;
+            white-space: nowrap;
+        }
+
+        .lane-icon {
+            margin-top: 4px;
+            display: grid;
+            place-items: center;
+            width: 34px;
+            height: 34px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.16);
+            font-size: 1.1rem;
+        }
+
+        .drop-slot {
+            flex: 1 1 auto;
+            min-height: 142px;
+            margin: 0;
+            padding: 10px;
+            border-radius: 20px;
+            border: 2px dashed var(--lane-border);
+            background: rgba(255, 255, 255, 0.32);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            align-items: center;
+            transition: transform 0.18s ease, filter 0.18s ease, background 0.18s ease;
+        }
+
+        .drop-slot.drag-over {
+            transform: translateY(-2px) scale(1.02);
+            filter: brightness(0.98);
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        .drop-slot.absorb-preview {
+            border-style: solid;
+            background:
+                radial-gradient(circle at 50% 16%, rgba(255, 255, 255, 0.68), transparent 38%),
+                rgba(255, 255, 255, 0.56);
+            box-shadow:
+                inset 0 0 0 2px rgba(255, 255, 255, 0.28),
+                0 0 0 4px rgba(255, 255, 255, 0.12);
+            transform: scale(1.01);
+        }
+
+        .drop-slot.absorb-preview-correct {
+            filter: saturate(1.08) brightness(1.02);
+        }
+
+        .drop-slot.absorb-preview-fail {
+            filter: saturate(1.02) brightness(0.99);
+        }
+
+        .question-pills {
+            min-height: 56px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-content: flex-start;
+            gap: 6px;
+            padding: 2px 2px 0;
+            pointer-events: none;
+        }
+
+        .question-pills.is-empty {
+            min-height: 40px;
+        }
+
+        .question-pill {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 5px 10px;
+            border-radius: 999px;
+            border: 1.5px solid var(--lane-border);
+            background: var(--lane-pill-bg, rgba(255, 255, 255, 0.8));
+            color: var(--lane-pill-text, var(--lane-main-dark));
+            box-shadow: 0 6px 14px rgba(17, 31, 73, 0.08);
+            font-size: 0.76rem;
+            line-height: 1;
+            font-weight: 900;
+            text-align: center;
+            white-space: nowrap;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        .bank-panel {
+            margin-top: 12px;
+            padding: 14px 16px 12px;
+            border-radius: 28px;
+            border: 2px solid rgba(123, 146, 201, 0.22);
+            background: var(--cream-panel);
+            box-shadow: var(--shadow-tight);
+        }
+
+        .bank-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 14px;
+            margin-bottom: 12px;
+        }
+
+        .bank-title strong {
+            display: block;
+            font-size: 1.35rem;
+            line-height: 1;
+            font-weight: 900;
+        }
+
+        .bank-title span {
+            display: block;
+            margin-top: 4px;
+            color: #5a6592;
+            font-size: 0.95rem;
+            font-weight: 700;
+        }
+
+        .word-bank {
+            min-height: 94px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 12px;
+            align-items: flex-start;
+        }
+
+        @keyframes tile-hover-bob {
+            0% { transform: translateY(0) rotate(-0.35deg); }
+            50% { transform: translateY(-5px) rotate(0.45deg); }
+            100% { transform: translateY(-1px) rotate(-0.2deg); }
+        }
+
+        .word-tile {
+            --shift-x: 0px;
+            --shift-y: 0px;
+            --tilt-x: 0deg;
+            --tilt-y: 0deg;
+            --tilt-z: 0deg;
+            --tile-scale: 1;
+            --flip-rotation: 0deg;
+            --tile-depth-shadow: 0 10px 18px rgba(24, 42, 84, 0.1);
+            --tile-highlight-shadow: 0 2px 0 rgba(255, 255, 255, 0.7) inset;
+            --tile-inner-shadow: 0 -2px 0 rgba(24, 42, 84, 0.05) inset;
+            width: 138px;
+            height: 72px;
+            perspective: 1000px;
+            touch-action: none;
+            cursor: grab;
+            flex: 0 0 auto;
+            position: relative;
+            will-change: transform;
+            transition: filter 0.25s ease;
+        }
+
+        .word-tile:active {
+            cursor: grabbing;
+        }
+
+        .word-tile.is-hovering:not(.is-dragging) {
+            animation: tile-hover-bob 1.05s ease-in-out infinite;
+            filter: saturate(1.03);
+            z-index: 2;
+        }
+
+        .word-tile.is-dragging {
+            animation: none;
+            filter: none;
+            z-index: 5;
+        }
+
+        .word-tile.is-slot-preview {
+            animation: none;
+            filter: none;
+        }
+
+        .word-tile.is-slot-preview .flip-card-inner {
+            transition:
+                transform 0.18s cubic-bezier(0.22, 1, 0.36, 1),
+                opacity 0.18s ease;
+        }
+
+        .word-tile.is-placed {
+            width: 100%;
+            height: 64px;
+            max-width: 100%;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transform:
+                translate3d(var(--shift-x), var(--shift-y), 0)
+                rotateX(var(--tilt-x))
+                rotateY(calc(var(--flip-rotation) + var(--tilt-y)))
+                rotateZ(var(--tilt-z))
+                scale(var(--tile-scale));
+            transition:
+                transform 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+                filter 0.22s ease;
+            pointer-events: none;
+            will-change: transform;
+        }
+
+        .rotate-y-180 {
+            --flip-rotation: 180deg;
+        }
+
+        .tile-face {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 12px;
+            border-radius: 18px;
+            backface-visibility: hidden;
+            text-align: center;
+            overflow: hidden;
+            box-shadow:
+                var(--tile-depth-shadow),
+                var(--tile-highlight-shadow),
+                var(--tile-inner-shadow);
+        }
+
+        .tile-front {
+            border: 2px solid #ead6bc;
+            background:
+                radial-gradient(circle at 22% 16%, rgba(255, 255, 255, 0.96), transparent 32%),
+                linear-gradient(180deg, #fffdfa 0%, #fff6ea 100%);
+            color: #1b2a57;
+        }
+
+        .tile-front-word {
+            display: -webkit-box;
+            width: 100%;
+            overflow: hidden;
+            font-size: var(--tile-front-size, 1rem);
+            line-height: var(--tile-front-line-height, 1.08);
+            font-weight: 900;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: var(--tile-front-lines, 2);
+            text-wrap: balance;
+        }
+
+        .word-tile.is-hovering .tile-front {
+            box-shadow:
+                0 18px 24px rgba(32, 51, 104, 0.15),
+                0 3px 0 rgba(255, 255, 255, 0.75) inset,
+                0 -3px 0 rgba(24, 42, 84, 0.06) inset;
+        }
+
+        .word-tile.is-slot-preview .tile-front,
+        .word-tile.is-placed .tile-front {
+            border-color: var(--placed-border, #ead6bc);
+            background:
+                radial-gradient(circle at 22% 16%, rgba(255, 255, 255, 0.96), transparent 34%),
+                linear-gradient(180deg, var(--placed-bg-top, #fffdfa) 0%, var(--placed-bg-bottom, #fff6ea) 100%);
+            box-shadow:
+                0 9px 18px rgba(29, 51, 95, 0.12),
+                0 2px 0 rgba(255, 255, 255, 0.78) inset,
+                0 -2px 0 rgba(29, 51, 95, 0.06) inset;
+        }
+
+        .word-tile.is-slot-preview .tile-front {
+            color: var(--placed-text, #1b2a57);
+        }
+
+        .word-tile.is-slot-preview .tile-front-word,
+        .word-tile.is-placed .tile-front-word {
+            font-size: var(--tile-placed-front-size, 0.9rem);
+            line-height: var(--tile-placed-front-line-height, 1.02);
+            -webkit-line-clamp: var(--tile-placed-front-lines, 2);
+        }
+
+        .word-tile.is-slot-preview .tile-back,
+        .word-tile.is-placed .tile-back {
+            border-color: rgba(40, 96, 56, 0.9);
+            padding: 8px 8px 7px;
+            gap: 5px;
+        }
+
+        .tile-front.tile-correct {
+            border-color: #61c73d;
+            box-shadow: 0 10px 18px rgba(81, 171, 42, 0.18);
+        }
+
+        .tile-front.tile-wrong {
+            border-color: #ef5555;
+            box-shadow: 0 10px 18px rgba(239, 85, 85, 0.18);
+        }
+
+        .tile-back {
+            transform: rotateY(180deg);
+            flex-direction: column;
+            justify-content: center;
+            gap: 6px;
+            border: 2px solid rgba(52, 114, 69, 0.92);
+            background:
+                radial-gradient(circle at 20% 18%, rgba(255, 255, 255, 0.12), transparent 30%),
+                linear-gradient(180deg, #295f34 0%, #1f4f29 54%, #173f20 100%);
+            color: white;
+        }
+
+        .tile-back::before {
+            content: "";
+            position: absolute;
+            left: 10px;
+            right: 10px;
+            top: 8px;
+            height: 14px;
+            border-radius: 999px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0));
+            pointer-events: none;
+        }
+
+        .tile-back-word {
+            display: -webkit-box;
+            width: 100%;
+            overflow: hidden;
+            font-size: var(--tile-back-size, 0.94rem);
+            line-height: var(--tile-back-line-height, 0.98);
+            font-weight: 900;
+            text-shadow: 0 1px 0 rgba(0, 0, 0, 0.12);
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: var(--tile-back-lines, 2);
+            text-wrap: balance;
+        }
+
+        .tile-back-meta {
+            max-width: 100%;
+            padding: 3px 8px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.14);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            font-size: 0.7rem;
+            line-height: 1.05;
+            font-weight: 900;
+            color: rgba(255, 255, 255, 0.96);
+            white-space: normal;
+        }
+
+        .word-tile.is-slot-preview .tile-back,
+        .word-tile.is-placed .tile-back {
+            justify-content: space-between;
+            align-items: stretch;
+            padding: 8px 8px 7px;
+            border-color: rgba(40, 96, 56, 0.9);
+            background:
+                radial-gradient(circle at 20% 16%, rgba(255, 255, 255, 0.16), transparent 28%),
+                linear-gradient(180deg, #2f7440 0%, #245d31 58%, #1b4826 100%);
+            box-shadow:
+                0 8px 14px rgba(21, 51, 29, 0.18),
+                0 2px 0 rgba(255, 255, 255, 0.08) inset,
+                0 -2px 0 rgba(8, 29, 13, 0.12) inset;
+        }
+
+        .word-tile.is-slot-preview .tile-back-word,
+        .word-tile.is-placed .tile-back-word {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 0;
+            flex: 1 1 auto;
+            padding: 0 4px;
+            font-size: var(--tile-placed-back-size, 0.78rem);
+            line-height: var(--tile-placed-back-line-height, 0.95);
+            -webkit-line-clamp: var(--tile-placed-back-lines, 2);
+        }
+
+        .word-tile.is-slot-preview .tile-back-meta,
+        .word-tile.is-placed .tile-back-meta {
+            align-self: center;
+            max-width: calc(100% - 8px);
+            padding: 4px 8px 3px;
+            background: rgba(255, 255, 255, 0.16);
+            border-color: rgba(255, 255, 255, 0.1);
+            font-size: 0.58rem;
+            line-height: 0.98;
+            letter-spacing: 0.01em;
+            text-transform: uppercase;
+        }
+
+        .feedback-strip {
+            margin-top: 12px;
+            min-height: 46px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            border-radius: 18px;
+            padding: 8px 14px;
+            color: #25447e;
+            font-size: 1rem;
+            font-weight: 900;
+            opacity: 0;
+            transition: opacity 0.18s ease;
+        }
+
+        .feedback-strip.is-visible {
+            opacity: 1;
+        }
+
+        .feedback-strip.tone-success {
+            background: rgba(117, 212, 55, 0.16);
+            color: #2e7c14;
+        }
+
+        .feedback-strip.tone-warning {
+            background: rgba(255, 196, 61, 0.18);
+            color: #9a6600;
+        }
+
+        .feedback-strip.tone-error {
+            background: rgba(243, 86, 86, 0.16);
+            color: #b12d2d;
+        }
+
+        .coach-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .coach-avatar-card {
+            position: relative;
+            padding: 12px 14px 0;
+            border-radius: 28px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(255, 243, 223, 0.96));
+            border: 2px solid rgba(214, 164, 74, 0.36);
+            box-shadow: var(--shadow-tight);
+            text-align: center;
+        }
+
+        .coach-bubble {
+            width: 144px;
+            height: 144px;
+            margin: 0 auto;
+            border-radius: 50%;
+            background:
+                radial-gradient(circle at 34% 26%, #fff7b5 0%, #ffc13f 18%, #cb690d 56%, #7b2d06 100%);
+            border: 6px solid rgba(255, 255, 255, 0.95);
+            display: grid;
+            place-items: center;
+            box-shadow: 0 22px 36px rgba(173, 98, 16, 0.28);
+            font-size: 4rem;
+        }
+
+        .coach-hoodie {
+            margin-top: -10px;
+            padding: 12px 12px 14px;
+            border-radius: 24px 24px 0 0;
+            background: linear-gradient(180deg, #2eb52f 0%, #1b8d20 100%);
+            color: white;
+            font-family: "Baloo 2", cursive;
+            font-size: 1.72rem;
+            line-height: 0.9;
+            box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.18);
+        }
+
+        .coach-feedback {
+            border-radius: 26px;
+            padding: 16px 16px 14px;
+            background: linear-gradient(180deg, #fffefc 0%, #fff3da 100%);
+            border: 2px solid rgba(241, 190, 78, 0.34);
+            box-shadow: var(--shadow-tight);
+            text-align: center;
+        }
+
+        .coach-feedback.tone-success {
+            border-color: rgba(122, 203, 83, 0.52);
+            background: linear-gradient(180deg, #fffef8 0%, #f7ffe8 100%);
+        }
+
+        .coach-feedback.tone-warning {
+            border-color: rgba(255, 190, 71, 0.5);
+        }
+
+        .coach-feedback.tone-error {
+            border-color: rgba(237, 90, 90, 0.42);
+            background: linear-gradient(180deg, #fff8f8 0%, #ffe9e9 100%);
+        }
+
+        .coach-feedback strong {
+            display: block;
+            color: #137428;
+            font-size: 1.56rem;
+            line-height: 1;
+            font-weight: 900;
+        }
+
+        .coach-feedback p {
+            margin: 8px 0 0;
+            font-size: 1.02rem;
+            line-height: 1.18;
+            font-weight: 800;
+            color: #314268;
+        }
+
+        .coach-checkmark {
+            display: grid;
+            place-items: center;
+            width: 54px;
+            height: 54px;
+            margin: 12px auto 0;
+            border-radius: 50%;
+            background: linear-gradient(180deg, #7be13b 0%, #45a818 100%);
+            color: white;
+            font-size: 1.8rem;
+            font-weight: 900;
+            box-shadow: 0 12px 18px rgba(69, 168, 24, 0.24);
+        }
+
+        .reward-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 12px 16px;
+            border-radius: 22px;
+            border: 2px solid rgba(243, 190, 67, 0.44);
+            background: linear-gradient(180deg, #fff8e3 0%, #ffe4a9 100%);
+            box-shadow: var(--shadow-tight);
+        }
+
+        .reward-card strong {
+            display: block;
+            font-size: 1.5rem;
+            line-height: 1;
+            font-weight: 900;
+        }
+
+        .reward-card span {
+            display: block;
+            margin-top: 3px;
+            font-size: 0.96rem;
+            font-weight: 800;
+            color: #77530d;
+        }
+
+        .coach-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .coach-actions .action-button {
+            width: 100%;
+            min-width: 0;
+        }
+
+        .control-zone {
+            padding: 4px 20px 20px;
+        }
+
+        .action-button {
+            border: 0;
+            border-radius: 24px;
+            padding: 16px 22px;
+            min-width: 190px;
+            box-shadow: var(--shadow-tight);
+            font-weight: 900;
+            color: #1c2d63;
+            background: linear-gradient(180deg, #ffffff 0%, #eaf1ff 100%);
+        }
+
+        .action-button strong {
+            display: block;
+            font-size: 1.65rem;
+            line-height: 1;
+        }
+
+        .action-button span {
+            display: block;
+            margin-top: 4px;
+            font-size: 0.95rem;
+            color: #53628e;
+        }
+
+        .action-button.primary {
+            min-width: 210px;
+            color: white;
+            background: linear-gradient(180deg, #4a94ff 0%, #2564f2 100%);
+        }
+
+        .action-button.primary span {
+            color: rgba(255, 255, 255, 0.82);
+        }
+
+        .action-button.success {
+            min-width: 254px;
+            color: white;
+            background: linear-gradient(180deg, #7de33d 0%, #3cab13 100%);
+        }
+
+        .action-button.success span {
+            color: rgba(255, 255, 255, 0.86);
+        }
+
+        .journey-sea {
+            position: relative;
+            overflow: hidden;
+            min-height: 138px;
+            padding: 18px 24px;
+            border-radius: 30px;
+            background:
+                radial-gradient(circle at 16% 30%, rgba(255, 255, 255, 0.55), transparent 13%),
+                radial-gradient(circle at 84% 40%, rgba(255, 255, 255, 0.44), transparent 15%),
+                var(--ocean);
+            border: 2px solid rgba(108, 173, 235, 0.5);
+            box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.55), var(--shadow-tight);
+        }
+
+        .journey-sea::before,
+        .journey-sea::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            width: 180px;
+            height: 54px;
+            border-radius: 50% 50% 0 0;
+            background: linear-gradient(180deg, #7ecb73 0%, #4ba851 100%);
+            box-shadow: inset 0 10px 0 rgba(255, 255, 255, 0.12);
+        }
+
+        .journey-sea::before {
+            left: 22px;
+        }
+
+        .journey-sea::after {
+            right: 30px;
+            width: 210px;
+            background: linear-gradient(180deg, #b6cb76 0%, #7c9942 100%);
+        }
+
+        .journey-header {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 14px;
+        }
+
+        .journey-header strong {
+            display: block;
+            font-size: 1.32rem;
+            line-height: 1;
+            font-weight: 900;
+            color: #1e4381;
+        }
+
+        .journey-header span {
+            display: block;
+            margin-top: 4px;
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: #4470ac;
+        }
+
+        .journey-track {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            grid-template-columns: repeat(var(--track-count, 10), minmax(0, 1fr));
+            align-items: center;
+            gap: 12px;
+        }
+
+        .journey-track::before {
+            content: "";
+            position: absolute;
+            left: 14px;
+            right: 14px;
+            top: 50%;
+            height: 8px;
+            border-radius: 999px;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.78);
+        }
+
+        .journey-node {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            place-items: center;
+            width: 42px;
+            height: 42px;
+            margin: 0 auto;
+            border-radius: 50%;
+            border: 3px solid rgba(255, 255, 255, 0.86);
+            background: rgba(255, 255, 255, 0.72);
+            color: #2a528d;
+            font-size: 1rem;
+            font-weight: 900;
+            box-shadow: 0 10px 18px rgba(43, 86, 148, 0.18);
+        }
+
+        .journey-node.is-complete {
+            background: linear-gradient(180deg, #8aef3d 0%, #48ad1a 100%);
+            color: white;
+        }
+
+        .journey-node.is-current {
+            background: linear-gradient(180deg, #ffe85c 0%, #ffb71c 100%);
+            color: #734509;
+            transform: scale(1.12);
+        }
+
+        .journey-node.is-locked {
+            background: rgba(239, 246, 255, 0.8);
+            color: #92a6c4;
+        }
+
+        .treasure-icon {
+            position: relative;
+            z-index: 1;
+            justify-self: end;
+            margin-left: auto;
+            font-size: 2rem;
+        }
+
+        .animate-pop {
+            animation: pop 0.4s ease-out;
+        }
+
+        @keyframes pop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @media (max-width: 1240px) {
+            .top-hud {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-box {
+                justify-content: flex-start;
+            }
+
+            .worksheet-strip {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .play-area {
+                grid-template-columns: 1fr;
+            }
+
+            .coach-panel {
+                display: grid;
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+                align-items: start;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .page-shell {
+                padding: 12px;
+            }
+
+            .worksheet-strip,
+            .play-area,
+            .control-zone {
+                padding-left: 12px;
+                padding-right: 12px;
+            }
+
+            .hud-stats,
+            .coach-panel,
+            .worksheet-strip {
+                grid-template-columns: 1fr;
+            }
+
+            .instruction-card,
+            .bank-toolbar,
+            .journey-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .action-button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-shell">
+        <header class="hero-copy">
+            <div class="title-flag">
+                <span class="flag-chip" aria-hidden="true"></span>
+                <h1>STOMPI Meester - Graad 6 Woordorde</h1>
+            </div>
+            <p>Play. Drag. Learn. Master STOMPI!</p>
+        </header>
+
+        <main class="app-frame">
+            <section class="top-hud">
+                <div class="brand-lockup">
+                    <div class="brand-mark">
+                        <strong>STOMPI<br>Meester</strong>
+                        <span>Graad 6 Woordorde</span>
+                    </div>
+                    <div class="flag-chip small" aria-hidden="true"></div>
+                </div>
+
+                <div class="hud-stats">
+                    <div class="hud-card">
+                        <div class="hud-icon">⭐</div>
+                        <div class="hud-copy">
+                            <strong id="xp-value">1 250 XP</strong>
+                            <span id="xp-caption">Volgende ster: 250 XP</span>
+                        </div>
+                    </div>
+                    <div class="hud-card">
+                        <div class="hud-icon">🔥</div>
+                        <div class="hud-copy">
+                            <strong id="streak-value">7</strong>
+                            <span>Dae op 'n ry!</span>
+                        </div>
+                    </div>
+                    <div class="hud-card">
+                        <div class="hud-copy">
+                            <strong id="level-indicator">Sin 1 / 10</strong>
+                            <span>Jou sin-vordering</span>
+                            <div class="sentence-progress-bar">
+                                <div id="sentence-progress-fill" class="sentence-progress-fill"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="profile-box">
+                    <div class="profile-avatar">🦁</div>
+                    <div class="profile-copy">
+                        <strong>Lebo</strong>
+                        <span>Level 12</span>
+                    </div>
+                    <button class="icon-button" type="button" aria-label="Settings">⚙️</button>
+                </div>
+            </section>
+
+            <section class="worksheet-strip">
+                <div class="world-card">
+                    <div class="card-badge">🌍</div>
+                    <div class="card-copy">
+                        <strong class="worksheet-title"><span class="nowrap">Wêreldkaart</span></strong>
+                        <span>Jou reis</span>
+                    </div>
+                </div>
+
+                <button id="tab-wk1" class="worksheet-card is-active" type="button">
+                    <div class="card-badge">🏝️</div>
+                    <div class="card-copy">
+                        <strong class="worksheet-title"><span class="nowrap">Werkkaart&nbsp;1</span></strong>
+                        <span>Beginner</span>
+                    </div>
+                </button>
+
+                <div class="worksheet-card is-locked">
+                    <div class="card-badge">🌫️</div>
+                    <div class="card-copy">
+                        <strong class="worksheet-title"><span class="nowrap">Werkkaart&nbsp;2</span></strong>
+                        <span>Op pad</span>
+                    </div>
+                    <div class="lock-mark">🔒</div>
+                </div>
+
+                <button id="tab-wk3" class="worksheet-card" type="button">
+                    <div class="card-badge">🏔️</div>
+                    <div class="card-copy">
+                        <strong class="worksheet-title"><span class="nowrap">Werkkaart&nbsp;3</span></strong>
+                        <span>Meester</span>
+                    </div>
+                </button>
+
+                <div class="challenge-card">
+                    <div class="card-badge">🏆</div>
+                    <div class="card-copy">
+                        <strong class="worksheet-title">Daaglikse<br>Uitdaging</strong>
+                        <span>Kry +50 XP</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="play-area">
+                <div class="board-column">
+                    <div class="instruction-card">
+                        <div class="instruction-copy">
+                            <div class="info-pill">i</div>
+                            <div>
+                                <strong>Bou die sin deur die woorde na die regte STOMPI-kolom te sleep.</strong>
+                                <span>Tap = kies 'n woord &nbsp; | &nbsp; Sleep = skuif &nbsp; | &nbsp; Kontroleer = check</span>
+                            </div>
+                        </div>
+                        <button id="btn-hint" class="hint-button" type="button">💡 Wenk? Hint</button>
+                    </div>
+
+                    <div class="lanes-board">
+                        <div id="slots-container" class="lanes-grid"></div>
+                    </div>
+
+                    <div class="bank-panel">
+                        <div class="bank-toolbar">
+                            <div class="bank-title">
+                                <strong>Kies 'n woord om te sleep</strong>
+                                <span>Drag a word into the correct lane</span>
+                            </div>
+                        </div>
+                        <div id="word-bank" class="word-bank"></div>
+                    </div>
+
+                    <div id="feedback-message" class="feedback-strip" aria-live="polite"></div>
+                </div>
+
+                <aside class="coach-panel">
+                    <div class="coach-avatar-card">
+                        <div class="coach-bubble">🦁</div>
+                        <div class="coach-hoodie">STOMPI<br>Meester</div>
+                    </div>
+
+                    <div id="coach-feedback" class="coach-feedback tone-success">
+                        <strong id="coach-title">Fantasties!</strong>
+                        <p id="coach-text">Jy het dit reg!<br>(You got it right!)</p>
+                        <div class="coach-checkmark">✓</div>
+                    </div>
+
+                    <div class="reward-card">
+                        <div>
+                            <strong>+20 XP</strong>
+                            <span>Ster gewen!</span>
+                        </div>
+                        <div style="font-size: 2.4rem;">⭐</div>
+                    </div>
+
+                    <div class="coach-actions">
+                        <button id="btn-reset" class="action-button" type="button">
+                            <strong>Herbegin</strong>
+                            <span>Begin weer</span>
+                        </button>
+                        <button id="btn-check" class="action-button primary" type="button">
+                            <strong>Kontroleer</strong>
+                            <span>Check jou antwoord</span>
+                        </button>
+                        <button id="btn-next" class="action-button success hidden" type="button">
+                            <strong>Volgende Sin</strong>
+                            <span>Sin 2 / 10</span>
+                        </button>
+                    </div>
+                </aside>
+            </section>
+
+            <section class="control-zone">
+                <div class="journey-sea">
+                    <div class="journey-header">
+                        <div>
+                            <strong>Visible Learning Journey</strong>
+                            <span>Die pad wys jou vordering oor elke sin en werkkaart.</span>
+                        </div>
+                        <div class="treasure-icon">🧰</div>
+                    </div>
+                    <div id="journey-track" class="journey-track"></div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        const worksheets = {
+            "Werkkaart 1": [
+                {
+                    id: 1,
+                    words: [
+                        { afr: "Pieter", eng: "Pieter", stompi: "S (Subject)" },
+                        { afr: "het", eng: "has", stompi: "v1 (Verb 1)" },
+                        { afr: "gister", eng: "yesterday", stompi: "T (Time)" },
+                        { afr: "'n foto van sy kat", eng: "a photo of his cat", stompi: "O (Object)" },
+                        { afr: "geneem", eng: "taken", stompi: "v2 (Verb 2)" }
+                    ],
+                    scramble: ["het", "Pieter", "'n foto van sy kat", "geneem", "gister"]
+                },
+                {
+                    id: 2,
+                    words: [
+                        { afr: "Garfield", eng: "Garfield", stompi: "S (Subject)" },
+                        { afr: "eet", eng: "eats", stompi: "v1 (Verb 1)" },
+                        { afr: "elke dag", eng: "every day", stompi: "T (Time)" },
+                        { afr: "lekker lasagne", eng: "tasty lasagna", stompi: "O (Object)" }
+                    ],
+                    scramble: ["eet", "Garfield", "lekker lasagne", "elke dag"]
+                },
+                {
+                    id: 3,
+                    words: [
+                        { afr: "Kyle", eng: "Kyle", stompi: "S (Subject)" },
+                        { afr: "gaan", eng: "goes", stompi: "v1 (Verb 1)" },
+                        { afr: "volgende week", eng: "next week", stompi: "T (Time)" },
+                        { afr: "vinnig", eng: "fast", stompi: "M (Manner)" },
+                        { afr: "per vliegtuig", eng: "by airplane", stompi: "M (Manner)" },
+                        { afr: "Kaapstad toe", eng: "to Cape Town", stompi: "P (Place)" },
+                        { afr: "om 'n huis te koop", eng: "to buy a house", stompi: "I (Infinitive)" }
+                    ],
+                    scramble: ["om 'n huis te koop", "Kyle", "Kaapstad toe", "vinnig", "gaan", "volgende week", "per vliegtuig"]
+                },
+                {
+                    id: 4,
+                    words: [
+                        { afr: "Ashley", eng: "Ashley", stompi: "S (Subject)" },
+                        { afr: "sal", eng: "will", stompi: "v1 (Verb 1)" },
+                        { afr: "oormôre", eng: "day after tomorrow", stompi: "T (Time)" },
+                        { afr: "in haar nuwe huis", eng: "in her new house", stompi: "P (Place)" },
+                        { afr: "slaap", eng: "sleep", stompi: "v2 (Verb 2)" }
+                    ],
+                    scramble: ["sal", "Ashley", "oormôre", "in haar nuwe huis", "slaap"]
+                },
+                {
+                    id: 5,
+                    words: [
+                        { afr: "hulle", eng: "they", stompi: "S (Subject)" },
+                        { afr: "braai", eng: "braai", stompi: "v1 (Verb 1)" },
+                        { afr: "vandag", eng: "today", stompi: "T (Time)" },
+                        { afr: "varktjops", eng: "pork chops", stompi: "O (Object)" },
+                        { afr: "langs die swembad", eng: "next to the pool", stompi: "P (Place)" }
+                    ],
+                    scramble: ["braai", "varktjops", "vandag", "langs die swembad", "hulle"]
+                },
+                {
+                    id: 6,
+                    words: [
+                        { afr: "Karel", eng: "Karel", stompi: "S (Subject)" },
+                        { afr: "hardloop", eng: "runs", stompi: "v1 (Verb 1)" },
+                        { afr: "elke aand", eng: "every evening", stompi: "T (Time)" },
+                        { afr: "in die straat", eng: "in the street", stompi: "P (Place)" },
+                        { afr: "om fiks te word", eng: "to get fit", stompi: "I (Infinitive)" }
+                    ],
+                    scramble: ["Karel", "in die straat", "hardloop", "elke aand", "om fiks te word"]
+                },
+                {
+                    id: 7,
+                    words: [
+                        { afr: "die kinders", eng: "the children", stompi: "S (Subject)" },
+                        { afr: "gaan", eng: "go", stompi: "v1 (Verb 1)" },
+                        { afr: "vandag", eng: "today", stompi: "T (Time)" },
+                        { afr: "na die winkel", eng: "to the shop", stompi: "P (Place)" },
+                        { afr: "om lekkers te koop", eng: "to buy sweets", stompi: "I (Infinitive)" }
+                    ],
+                    scramble: ["om lekkers te koop", "die kinders", "na die winkel", "gaan", "vandag"]
+                },
+                {
+                    id: 8,
+                    words: [
+                        { afr: "Maria", eng: "Maria", stompi: "S (Subject)" },
+                        { afr: "het", eng: "has", stompi: "v1 (Verb 1)" },
+                        { afr: "nou-nou", eng: "just now", stompi: "T (Time)" },
+                        { afr: "vir haarself", eng: "for herself", stompi: "O (Indirect Object)" },
+                        { afr: "mooi rokke", eng: "beautiful dresses", stompi: "O (Object)" },
+                        { afr: "gekoop", eng: "bought", stompi: "v2 (Verb 2)" }
+                    ],
+                    scramble: ["Maria", "gekoop", "mooi rokke", "het", "vir haarself", "nou-nou"]
+                },
+                {
+                    id: 9,
+                    words: [
+                        { afr: "Sandra se ma", eng: "Sandra's mom", stompi: "S (Subject)" },
+                        { afr: "hou", eng: "likes", stompi: "v1 (Verb 1)" },
+                        { afr: "die minste", eng: "the least", stompi: "M (Manner)" },
+                        { afr: "van pers en geel", eng: "purple and yellow", stompi: "O (Object)" }
+                    ],
+                    scramble: ["Sandra se ma", "van pers en geel", "hou", "die minste"]
+                },
+                {
+                    id: 10,
+                    words: [
+                        { afr: "Sy", eng: "She", stompi: "S (Subject)" },
+                        { afr: "wil", eng: "wants to", stompi: "v1 (Verb 1)" },
+                        { afr: "eendag", eng: "one day", stompi: "T (Time)" },
+                        { afr: "as sy groot is", eng: "when she's big", stompi: "T (Time)" },
+                        { afr: "'n rekenmeester", eng: "an accountant", stompi: "O (Object)" },
+                        { afr: "word", eng: "become", stompi: "v2 (Verb 2)" }
+                    ],
+                    scramble: ["wil", "'n rekenmeester", "Sy", "word", "as sy groot is", "eendag"]
+                }
+            ],
+            "Werkkaart 3": [
+                {
+                    id: 1,
+                    words: [
+                        { afr: "Die kinders", eng: "The children", stompi: "S (Subject)" },
+                        { afr: "speel", eng: "play", stompi: "v1 (Verb 1)" },
+                        { afr: "elke dag", eng: "every day", stompi: "T (Time)" },
+                        { afr: "buite", eng: "outside", stompi: "P (Place)" },
+                        { afr: "in die park", eng: "in the park", stompi: "P (Place)" }
+                    ],
+                    scramble: ["speel", "buite", "elke dag", "in die park", "Die kinders"]
+                },
+                {
+                    id: 2,
+                    words: [
+                        { afr: "Ek", eng: "I", stompi: "S (Subject)" },
+                        { afr: "lees", eng: "read", stompi: "v1 (Verb 1)" },
+                        { afr: "'n boek", eng: "a book", stompi: "O (Object)" },
+                        { afr: "stil", eng: "quietly", stompi: "M (Manner)" },
+                        { afr: "in my kamer", eng: "in my room", stompi: "P (Place)" }
+                    ],
+                    scramble: ["lees", "'n boek", "Ek", "in my kamer", "stil"]
+                },
+                {
+                    id: 3,
+                    words: [
+                        { afr: "Ons", eng: "We", stompi: "S (Subject)" },
+                        { afr: "kyk", eng: "watch / look", stompi: "v1 (Verb 1)" },
+                        { afr: "saans", eng: "in the evenings", stompi: "T (Time)" },
+                        { afr: "na die sterre", eng: "at the stars", stompi: "O (Object)" },
+                        { afr: "in die hemel", eng: "in the sky", stompi: "P (Place)" }
+                    ],
+                    scramble: ["Ons", "saans", "na die sterre", "kyk", "in die hemel"]
+                },
+                {
+                    id: 4,
+                    words: [
+                        { afr: "Sy", eng: "She", stompi: "S (Subject)" },
+                        { afr: "hardloop", eng: "runs", stompi: "v1 (Verb 1)" },
+                        { afr: "vinnig", eng: "fast", stompi: "M (Manner)" },
+                        { afr: "op die sportveld", eng: "on the sports field", stompi: "P (Place)" },
+                        { afr: "om vir haar hokkie te oefen", eng: "to practice for her hockey", stompi: "I (Infinitive)" }
+                    ],
+                    scramble: ["hardloop", "om vir haar hokkie te oefen", "Sy", "vinnig", "op die sportveld"]
+                },
+                {
+                    id: 5,
+                    words: [
+                        { afr: "Die hond", eng: "The dog", stompi: "S (Subject)" },
+                        { afr: "slaap", eng: "sleeps", stompi: "v1 (Verb 1)" },
+                        { afr: "rustig", eng: "peacefully", stompi: "M (Manner)" },
+                        { afr: "onder die boom", eng: "under the tree", stompi: "P (Place)" },
+                        { afr: "in die tuin", eng: "in the garden", stompi: "P (Place)" }
+                    ],
+                    scramble: ["slaap", "rustig", "onder die boom", "Die hond", "in die tuin"]
+                },
+                {
+                    id: 6,
+                    words: [
+                        { afr: "Jy", eng: "You", stompi: "S (Subject)" },
+                        { afr: "skryf", eng: "write", stompi: "v1 (Verb 1)" },
+                        { afr: "altyd", eng: "always", stompi: "T (Time)" },
+                        { afr: "met 'n pen", eng: "with a pen", stompi: "O (Object)" },
+                        { afr: "netjies", eng: "neatly", stompi: "M (Manner)" },
+                        { afr: "op die papier", eng: "on the paper", stompi: "P (Place)" },
+                        { afr: "om goeie punte te kry", eng: "to get good marks", stompi: "I (Infinitive)" }
+                    ],
+                    scramble: ["Jy", "om goeie punte te kry", "netjies", "skryf", "met 'n pen", "altyd", "op die papier"]
+                },
+                {
+                    id: 7,
+                    words: [
+                        { afr: "Die kat", eng: "The cat", stompi: "S (Subject)" },
+                        { afr: "spring", eng: "jumps", stompi: "v1 (Verb 1)" },
+                        { afr: "maklik", eng: "easily", stompi: "M (Manner)" },
+                        { afr: "oor die muur", eng: "over the wall", stompi: "P (Place)" },
+                        { afr: "tot in die straat", eng: "into the street", stompi: "P (Place)" }
+                    ],
+                    scramble: ["maklik", "spring", "oor die muur", "Die kat", "tot in die straat"]
+                },
+                {
+                    id: 8,
+                    words: [
+                        { afr: "Sy", eng: "She", stompi: "S (Subject)" },
+                        { afr: "ry", eng: "rides", stompi: "v1 (Verb 1)" },
+                        { afr: "soggens", eng: "in the mornings", stompi: "T (Time)" },
+                        { afr: "met die fiets", eng: "with the bicycle", stompi: "O (Object)" },
+                        { afr: "stadig", eng: "slowly", stompi: "M (Manner)" },
+                        { afr: "op die pad", eng: "on the road", stompi: "P (Place)" },
+                        { afr: "om by die skool te kom", eng: "to get to school", stompi: "I (Infinitive)" }
+                    ],
+                    scramble: ["Sy", "ry", "stadig", "om by die skool te kom", "met die fiets", "soggens", "op die pad"]
+                }
+            ]
+        };
+
+        const stompiStructure = [
+            {
+                id: "S",
+                symbol: "S",
+                title: "Subjek",
+                subtitle: "(Subject)",
+                icon: "👤",
+                questionWords: ["Wie?", "Wat?"],
+                main: "#ff5c89",
+                dark: "#ff3f74",
+                soft: "linear-gradient(180deg, #ffd4de 0%, #ffdfe7 100%)",
+                border: "#ff8ca7",
+                pillBg: "rgba(255, 232, 238, 0.95)",
+                shadow: "rgba(255, 93, 137, 0.22)"
+            },
+            {
+                id: "v1",
+                symbol: "v1",
+                title: "Werkwoord",
+                subtitle: "(Verb 1)",
+                icon: "🔗",
+                questionWords: [],
+                main: "#ffa048",
+                dark: "#ff8731",
+                soft: "linear-gradient(180deg, #ffe0be 0%, #ffe8cf 100%)",
+                border: "#ffb56a",
+                pillBg: "rgba(255, 240, 225, 0.95)",
+                shadow: "rgba(255, 160, 72, 0.22)"
+            },
+            {
+                id: "T",
+                symbol: "T",
+                title: "Tyd",
+                subtitle: "(Time)",
+                icon: "🕒",
+                questionWords: ["Wanneer?", "Hoe laat?", "Watter tyd?"],
+                main: "#ffd454",
+                dark: "#ffbc2b",
+                soft: "linear-gradient(180deg, #fff0b9 0%, #fff7d8 100%)",
+                border: "#ffd35b",
+                pillBg: "rgba(255, 248, 219, 0.98)",
+                shadow: "rgba(255, 196, 61, 0.22)"
+            },
+            {
+                id: "O",
+                symbol: "O",
+                title: "Objek",
+                subtitle: "(Object)",
+                icon: "🎯",
+                questionWords: ["Wat?", "Wie?"],
+                main: "#afe13e",
+                dark: "#8ccd2a",
+                soft: "linear-gradient(180deg, #ebffbf 0%, #f3ffd9 100%)",
+                border: "#b2dd54",
+                pillBg: "rgba(240, 255, 214, 0.96)",
+                shadow: "rgba(128, 190, 45, 0.2)"
+            },
+            {
+                id: "M",
+                symbol: "M",
+                title: "Manier",
+                subtitle: "(Manner)",
+                icon: "✨",
+                questionWords: ["Hoe?"],
+                main: "#46bde7",
+                dark: "#299bcc",
+                soft: "linear-gradient(180deg, #d3f4ff 0%, #ddf7ff 100%)",
+                border: "#72c9eb",
+                pillBg: "rgba(222, 247, 255, 0.96)",
+                shadow: "rgba(70, 189, 231, 0.22)"
+            },
+            {
+                id: "P",
+                symbol: "P",
+                title: "Plek",
+                subtitle: "(Place)",
+                icon: "📍",
+                questionWords: ["Waar?", "Waarheen?"],
+                main: "#bb70ff",
+                dark: "#9e54ea",
+                soft: "linear-gradient(180deg, #ecd4ff 0%, #f0ddff 100%)",
+                border: "#c587ff",
+                pillBg: "rgba(242, 229, 255, 0.96)",
+                shadow: "rgba(187, 112, 255, 0.22)"
+            },
+            {
+                id: "v2",
+                symbol: "v2",
+                title: "Werkwoord",
+                subtitle: "(Verb 2)",
+                icon: "🔗",
+                questionWords: [],
+                main: "#f57cdf",
+                dark: "#ea53cb",
+                soft: "linear-gradient(180deg, #ffd9f5 0%, #ffe5f8 100%)",
+                border: "#f693e5",
+                pillBg: "rgba(255, 233, 249, 0.96)",
+                shadow: "rgba(245, 124, 223, 0.22)"
+            },
+            {
+                id: "I",
+                symbol: "I",
+                title: "Infinitief",
+                subtitle: "(Infinitive)",
+                icon: "💬",
+                questionWords: ["Waarom?", "Hoekom?"],
+                main: "#7b75ff",
+                dark: "#6258f2",
+                soft: "linear-gradient(180deg, #dcdcff 0%, #ebe9ff 100%)",
+                border: "#9994ff",
+                pillBg: "rgba(235, 236, 255, 0.96)",
+                shadow: "rgba(123, 117, 255, 0.22)"
+            }
+        ];
+
+        let currentWorksheetKey = "Werkkaart 1";
+        let currentLevelIndex = 0;
+        let xp = 1250;
+        let streak = 7;
+        let solvedCurrentLevel = false;
+
+        const slotsContainer = document.getElementById("slots-container");
+        const bankContainer = document.getElementById("word-bank");
+        const feedbackMsg = document.getElementById("feedback-message");
+        const btnCheck = document.getElementById("btn-check");
+        const btnNext = document.getElementById("btn-next");
+        const btnReset = document.getElementById("btn-reset");
+        const btnHint = document.getElementById("btn-hint");
+        const levelIndicator = document.getElementById("level-indicator");
+        const sentenceProgressFill = document.getElementById("sentence-progress-fill");
+        const journeyTrack = document.getElementById("journey-track");
+        const worksheetStrip = document.querySelector(".worksheet-strip");
+        const worksheetTitles = Array.from(document.querySelectorAll(".worksheet-title"));
+        const xpValue = document.getElementById("xp-value");
+        const xpCaption = document.getElementById("xp-caption");
+        const streakValue = document.getElementById("streak-value");
+        const coachFeedback = document.getElementById("coach-feedback");
+        const coachTitle = document.getElementById("coach-title");
+        const coachText = document.getElementById("coach-text");
+
+        function formatNumber(value) {
+            return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+        }
+
+        function updateHud() {
+            const totalSentences = worksheets[currentWorksheetKey].length;
+            const progressPercent = ((currentLevelIndex + 1) / totalSentences) * 100;
+            const toNextStar = 250 - (xp % 250 || 250);
+
+            xpValue.textContent = `${formatNumber(xp)} XP`;
+            xpCaption.textContent = `Volgende ster: ${toNextStar === 250 ? 0 : toNextStar} XP`;
+            streakValue.textContent = String(streak);
+            levelIndicator.textContent = `Sin ${currentLevelIndex + 1} / ${totalSentences}`;
+            sentenceProgressFill.style.width = `${progressPercent}%`;
+            btnNext.querySelector("span").textContent = `Sin ${Math.min(currentLevelIndex + 2, totalSentences)} / ${totalSentences}`;
+        }
+
+        function updateWorksheetTabs() {
+            const tab1 = document.getElementById("tab-wk1");
+            const tab3 = document.getElementById("tab-wk3");
+
+            tab1.classList.toggle("is-active", currentWorksheetKey === "Werkkaart 1");
+            tab3.classList.toggle("is-active", currentWorksheetKey === "Werkkaart 3");
+        }
+
+        function titleFitsWithinTwoLines(title, sizeRem) {
+            const titleClone = title.cloneNode(true);
+            titleClone.style.position = "absolute";
+            titleClone.style.left = "-9999px";
+            titleClone.style.top = "0";
+            titleClone.style.width = `${title.clientWidth}px`;
+            titleClone.style.minHeight = "0";
+            titleClone.style.height = "auto";
+            titleClone.style.overflow = "visible";
+            titleClone.style.display = "block";
+            titleClone.style.webkitLineClamp = "unset";
+            titleClone.style.fontSize = `${sizeRem}rem`;
+            document.body.appendChild(titleClone);
+
+            const lineHeight = parseFloat(window.getComputedStyle(titleClone).lineHeight);
+            const fits = titleClone.offsetHeight <= (lineHeight * 2) + 1;
+
+            titleClone.remove();
+            return fits;
+        }
+
+        function fitWorksheetTitles() {
+            if (!worksheetTitles.length) {
+                return;
+            }
+
+            const maxSize = 1.42;
+            const minSize = 1.06;
+            const step = 0.02;
+            let chosenSize = minSize;
+
+            for (let size = maxSize; size >= minSize; size = Number((size - step).toFixed(2))) {
+                const fitsEveryTitle = worksheetTitles.every((title) => titleFitsWithinTwoLines(title, size));
+
+                if (fitsEveryTitle) {
+                    chosenSize = size;
+                    break;
+                }
+            }
+
+            worksheetTitles.forEach((title) => {
+                title.style.setProperty("--worksheet-title-size", `${chosenSize}rem`);
+            });
+        }
+
+        function renderJourney() {
+            const totalSentences = worksheets[currentWorksheetKey].length;
+            const completedThrough = solvedCurrentLevel ? currentLevelIndex + 1 : currentLevelIndex;
+
+            journeyTrack.style.setProperty("--track-count", totalSentences);
+            journeyTrack.innerHTML = "";
+
+            for (let i = 0; i < totalSentences; i += 1) {
+                const node = document.createElement("div");
+                node.className = "journey-node";
+                node.textContent = String(i + 1);
+
+                if (i < completedThrough) {
+                    node.classList.add("is-complete");
+                } else if (i === currentLevelIndex) {
+                    node.classList.add("is-current");
+                } else {
+                    node.classList.add("is-locked");
+                }
+
+                journeyTrack.appendChild(node);
+            }
+        }
+
+        function setCoach(tone, title, text) {
+            coachFeedback.classList.remove("tone-success", "tone-warning", "tone-error");
+            coachFeedback.classList.add(tone);
+            coachTitle.textContent = title;
+            coachText.innerHTML = text;
+        }
+
+        function showFeedback(text, tone) {
+            feedbackMsg.className = `feedback-strip is-visible ${tone}`;
+            feedbackMsg.innerHTML = text;
+        }
+
+        function hideFeedback() {
+            feedbackMsg.className = "feedback-strip";
+            feedbackMsg.innerHTML = "";
+        }
+
+        function setWorksheet(key) {
+            currentWorksheetKey = key;
+            currentLevelIndex = 0;
+            solvedCurrentLevel = false;
+            updateWorksheetTabs();
+            loadLevel(0);
+        }
+
+        document.getElementById("tab-wk1").addEventListener("click", () => setWorksheet("Werkkaart 1"));
+        document.getElementById("tab-wk3").addEventListener("click", () => setWorksheet("Werkkaart 3"));
+
+        function renderLane(part) {
+            const lane = document.createElement("div");
+            const questionPills = (part.questionWords || []).map((word) => {
+                return `<span class="question-pill">${word}</span>`;
+            }).join("");
+
+            lane.className = "lane-card stompi-column";
+            lane.style.setProperty("--lane-main", part.main);
+            lane.style.setProperty("--lane-main-dark", part.dark);
+            lane.style.setProperty("--lane-soft", part.soft);
+            lane.style.setProperty("--lane-border", part.border);
+            lane.style.setProperty("--lane-pill-bg", part.pillBg || "rgba(255, 255, 255, 0.82)");
+            lane.style.setProperty("--lane-pill-text", part.dark);
+            lane.style.setProperty("--lane-shadow", part.shadow);
+
+            lane.innerHTML = `
+                <div class="lane-header stompi-header">
+                    <div class="lane-symbol">${part.symbol}</div>
+                    <div class="lane-title">${part.title}</div>
+                    <div class="lane-subtitle">${part.subtitle}</div>
+                    <div class="lane-icon">${part.icon}</div>
+                </div>
+                <div class="lane-content">
+                    <div class="drop-slot" data-stompi-id="${part.id}"></div>
+                    <div class="question-pills${questionPills ? "" : " is-empty"}">${questionPills}</div>
+                </div>
+            `;
+
+            return lane;
+        }
+
+        function createTile(wordData) {
+            const wrapper = document.createElement("div");
+            wrapper.className = "word-tile";
+            wrapper.dataset.word = wordData.afr;
+            wrapper.dataset.expectedStompi = wordData.stompi.split(" ")[0];
+
+            const inner = document.createElement("div");
+            inner.className = "flip-card-inner";
+            inner.innerHTML = `
+                <div class="tile-face tile-front">
+                    <span class="tile-front-word">${wordData.afr}</span>
+                </div>
+                <div class="tile-face tile-back">
+                    <strong class="tile-back-word">${wordData.eng}</strong>
+                    <span class="tile-back-meta">${wordData.stompi}</span>
+                </div>
+            `;
+
+            wrapper.appendChild(inner);
+            applyAdaptiveTileText(wrapper);
+            attachTileMotion(wrapper);
+            return wrapper;
+        }
+
+        function getAdaptiveTextSpec(text, context) {
+            const normalized = text.trim();
+            const length = normalized.length;
+            const wordCount = normalized.split(/\s+/).filter(Boolean).length;
+
+            if (context === "front") {
+                if (length > 18 || wordCount >= 4) {
+                    return { size: "0.8rem", lines: 3, lineHeight: "1.02" };
+                }
+                if (length > 11 || wordCount >= 3) {
+                    return { size: "0.9rem", lines: 2, lineHeight: "1.04" };
+                }
+                return { size: "1rem", lines: 2, lineHeight: "1.08" };
+            }
+
+            if (context === "back") {
+                if (length > 18 || wordCount >= 4) {
+                    return { size: "0.84rem", lines: 3, lineHeight: "0.96" };
+                }
+                if (length > 11 || wordCount >= 3) {
+                    return { size: "0.9rem", lines: 2, lineHeight: "0.98" };
+                }
+                return { size: "0.94rem", lines: 2, lineHeight: "0.98" };
+            }
+
+            if (length > 18 || wordCount >= 4) {
+                return { size: "0.62rem", lines: 3, lineHeight: "0.92" };
+            }
+            if (length > 11 || wordCount >= 3) {
+                return { size: "0.7rem", lines: 2, lineHeight: "0.94" };
+            }
+            return { size: "0.78rem", lines: 2, lineHeight: "0.95" };
+        }
+
+        function applyAdaptiveTileText(tile) {
+            const frontText = tile.querySelector(".tile-front-word");
+            const backText = tile.querySelector(".tile-back-word");
+            if (!frontText || !backText) {
+                return;
+            }
+
+            const frontSpec = getAdaptiveTextSpec(frontText.textContent || "", "front");
+            const backSpec = getAdaptiveTextSpec(backText.textContent || "", "back");
+            const placedFrontSpec = getAdaptiveTextSpec(frontText.textContent || "", "placed-back");
+            const placedBackSpec = getAdaptiveTextSpec(backText.textContent || "", "placed-back");
+
+            tile.style.setProperty("--tile-front-size", frontSpec.size);
+            tile.style.setProperty("--tile-front-lines", String(frontSpec.lines));
+            tile.style.setProperty("--tile-front-line-height", frontSpec.lineHeight);
+
+            tile.style.setProperty("--tile-back-size", backSpec.size);
+            tile.style.setProperty("--tile-back-lines", String(backSpec.lines));
+            tile.style.setProperty("--tile-back-line-height", backSpec.lineHeight);
+
+            tile.style.setProperty("--tile-placed-front-size", placedFrontSpec.size);
+            tile.style.setProperty("--tile-placed-front-lines", String(placedFrontSpec.lines));
+            tile.style.setProperty("--tile-placed-front-line-height", placedFrontSpec.lineHeight);
+
+            tile.style.setProperty("--tile-placed-back-size", placedBackSpec.size);
+            tile.style.setProperty("--tile-placed-back-lines", String(placedBackSpec.lines));
+            tile.style.setProperty("--tile-placed-back-line-height", placedBackSpec.lineHeight);
+        }
+
+        function updateTileMagnetism(tile, event) {
+            const rect = tile.getBoundingClientRect();
+            if (!rect.width || !rect.height) {
+                return;
+            }
+
+            const relativeX = (event.clientX - rect.left) / rect.width;
+            const relativeY = (event.clientY - rect.top) / rect.height;
+            const offsetX = relativeX - 0.5;
+            const offsetY = relativeY - 0.5;
+
+            tile.style.setProperty("--shift-x", `${offsetX * 10}px`);
+            tile.style.setProperty("--shift-y", `${(offsetY * 4) - 7}px`);
+            tile.style.setProperty("--tilt-x", `${(0.5 - relativeY) * 10}deg`);
+            tile.style.setProperty("--tilt-y", `${offsetX * 12}deg`);
+            tile.style.setProperty("--tilt-z", `${offsetX * 1.6}deg`);
+            tile.style.setProperty("--tile-scale", "1.035");
+        }
+
+        function resetTileMagnetism(tile) {
+            tile.classList.remove("is-hovering");
+            tile.style.setProperty("--shift-x", "0px");
+            tile.style.setProperty("--shift-y", "0px");
+            tile.style.setProperty("--tilt-x", "0deg");
+            tile.style.setProperty("--tilt-y", "0deg");
+            tile.style.setProperty("--tilt-z", "0deg");
+            tile.style.setProperty("--tile-scale", "1");
+        }
+
+        function attachTileMotion(tile) {
+            tile.addEventListener("pointerenter", () => {
+                if (tile.classList.contains("is-dragging")) {
+                    return;
+                }
+
+                tile.classList.add("is-hovering");
+                tile.style.setProperty("--tile-scale", "1.02");
+            });
+
+            tile.addEventListener("pointermove", (event) => {
+                if (tile.classList.contains("is-dragging")) {
+                    return;
+                }
+
+                tile.classList.add("is-hovering");
+                updateTileMagnetism(tile, event);
+            });
+
+            tile.addEventListener("pointerleave", () => {
+                if (tile.classList.contains("is-dragging")) {
+                    return;
+                }
+
+                resetTileMagnetism(tile);
+            });
+        }
+
+        function setTileState(tile, state) {
+            const front = tile.querySelector(".tile-front");
+            front.classList.remove("tile-correct", "tile-wrong");
+
+            if (state === "correct") {
+                front.classList.add("tile-correct");
+            }
+
+            if (state === "wrong") {
+                front.classList.add("tile-wrong");
+            }
+        }
+
+        function loadLevel(index) {
+            currentLevelIndex = index;
+            solvedCurrentLevel = false;
+
+            const level = worksheets[currentWorksheetKey][index];
+
+            slotsContainer.innerHTML = "";
+            bankContainer.innerHTML = "";
+            hideFeedback();
+            btnCheck.classList.remove("hidden");
+            btnNext.classList.add("hidden");
+            btnReset.dataset.mode = "restart";
+            btnReset.innerHTML = "<strong>Herbegin</strong><span>Begin weer</span>";
+            btnCheck.innerHTML = "<strong>Kontroleer</strong><span>Check jou antwoord</span>";
+
+            setCoach("tone-success", "Fantasties!", "Bou die sin stap vir stap.<br>(Build the sentence one step at a time.)");
+
+            stompiStructure.forEach((part) => {
+                slotsContainer.appendChild(renderLane(part));
+            });
+
+            level.scramble.forEach((scrambledWord) => {
+                const originalData = level.words.find((word) => word.afr.toLowerCase() === scrambledWord.toLowerCase());
+                if (originalData) {
+                    bankContainer.appendChild(createTile(originalData));
+                }
+            });
+
+            updateHud();
+            renderJourney();
+        }
+
+        let draggingTile = null;
+        let ghostTile = null;
+        let startX = 0;
+        let startY = 0;
+        let isDragging = false;
+        let isResolvingDrop = false;
+
+        function getPlayMode() {
+            return currentWorksheetKey === "Werkkaart 3" ? "challenge" : "practice";
+        }
+
+        function isCorrectSlotForTile(slot, tile) {
+            return Boolean(slot && tile) && slot.dataset.stompiId === tile.dataset.expectedStompi;
+        }
+
+        function clearSlotPreviews() {
+            document.querySelectorAll(".drop-slot").forEach((slot) => {
+                slot.classList.remove("drag-over", "absorb-preview", "absorb-preview-correct", "absorb-preview-fail");
+            });
+        }
+
+        function applyPlacedTileLook(tile, slot) {
+            const laneStyles = window.getComputedStyle(slot.closest(".lane-card"));
+            tile.classList.add("is-placed");
+            tile.style.setProperty("--placed-border", laneStyles.getPropertyValue("--lane-border").trim());
+            tile.style.setProperty("--placed-bg-top", "rgba(255, 255, 255, 0.98)");
+            tile.style.setProperty("--placed-bg-bottom", laneStyles.getPropertyValue("--lane-pill-bg").trim() || "rgba(255, 255, 255, 0.92)");
+            tile.style.setProperty("--placed-text", "#1b2a57");
+        }
+
+        function clearPlacedTileLook(tile) {
+            tile.classList.remove("is-placed", "is-slot-preview");
+            tile.style.removeProperty("--placed-border");
+            tile.style.removeProperty("--placed-bg-top");
+            tile.style.removeProperty("--placed-bg-bottom");
+            tile.style.removeProperty("--placed-text");
+        }
+
+        function updateGhostForSlot(slot, isCorrect) {
+            if (!ghostTile || !slot) {
+                return;
+            }
+
+            const slotRect = slot.getBoundingClientRect();
+            const laneStyles = window.getComputedStyle(slot.closest(".lane-card"));
+            const previewWidth = Math.max(slotRect.width - 18, 84);
+            const previewHeight = 58;
+            const previewLeft = slotRect.left + ((slotRect.width - previewWidth) / 2);
+            const previewTop = slotRect.top + 14;
+
+            ghostTile.classList.add("is-slot-preview");
+            ghostTile.style.setProperty("--placed-border", laneStyles.getPropertyValue("--lane-border").trim());
+            ghostTile.style.setProperty("--placed-bg-top", "rgba(255, 255, 255, 0.98)");
+            ghostTile.style.setProperty("--placed-bg-bottom", laneStyles.getPropertyValue("--lane-pill-bg").trim() || "rgba(255, 255, 255, 0.92)");
+            ghostTile.style.setProperty("--placed-text", "#1b2a57");
+            ghostTile.style.width = `${previewWidth}px`;
+            ghostTile.style.height = `${previewHeight}px`;
+            ghostTile.style.left = `${previewLeft}px`;
+            ghostTile.style.top = `${previewTop}px`;
+            ghostTile.style.opacity = isCorrect ? "0.98" : "0.94";
+            ghostTile.style.transform = isCorrect ? "scale(0.98)" : "scale(0.96)";
+        }
+
+        function clearGhostSlotState() {
+            if (!ghostTile) {
+                return;
+            }
+
+            ghostTile.classList.remove("is-slot-preview");
+            ghostTile.style.removeProperty("--placed-border");
+            ghostTile.style.removeProperty("--placed-bg-top");
+            ghostTile.style.removeProperty("--placed-bg-bottom");
+            ghostTile.style.removeProperty("--placed-text");
+            ghostTile.style.width = "";
+            ghostTile.style.height = "";
+            ghostTile.style.opacity = "0.92";
+            ghostTile.style.transform = "scale(1.06)";
+        }
+
+        function animateDropResolution(tile, slot, outcome) {
+            if (!ghostTile) {
+                if (outcome === "accept") {
+                    slot.appendChild(tile);
+                    tile.querySelector(".flip-card-inner").classList.remove("rotate-y-180");
+                    applyPlacedTileLook(tile, slot);
+                    setTileState(tile, "default");
+                } else {
+                    bankContainer.appendChild(tile);
+                    tile.querySelector(".flip-card-inner").classList.remove("rotate-y-180");
+                    clearPlacedTileLook(tile);
+                    setTileState(tile, "default");
+                }
+                return;
+            }
+
+            const slotRect = slot.getBoundingClientRect();
+            const laneStyles = window.getComputedStyle(slot.closest(".lane-card"));
+            const previewWidth = Math.max(slotRect.width - 18, 84);
+            const previewHeight = 58;
+            const previewLeft = slotRect.left + ((slotRect.width - previewWidth) / 2);
+            const previewTop = slotRect.top + 14;
+
+            ghostTile.classList.add("is-slot-preview");
+            ghostTile.style.setProperty("--placed-border", laneStyles.getPropertyValue("--lane-border").trim());
+            ghostTile.style.setProperty("--placed-bg-top", "rgba(255, 255, 255, 0.98)");
+            ghostTile.style.setProperty("--placed-bg-bottom", laneStyles.getPropertyValue("--lane-pill-bg").trim() || "rgba(255, 255, 255, 0.92)");
+            ghostTile.style.setProperty("--placed-text", "#1b2a57");
+            ghostTile.style.transition = "left 0.22s cubic-bezier(0.22, 1, 0.36, 1), top 0.22s cubic-bezier(0.22, 1, 0.36, 1), width 0.22s cubic-bezier(0.22, 1, 0.36, 1), height 0.22s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.22s ease, transform 0.22s cubic-bezier(0.22, 1, 0.36, 1)";
+            ghostTile.style.width = `${previewWidth}px`;
+            ghostTile.style.height = `${previewHeight}px`;
+            ghostTile.style.left = `${previewLeft}px`;
+            ghostTile.style.top = `${previewTop}px`;
+            ghostTile.style.opacity = "0.98";
+            ghostTile.style.transform = "scale(0.98)";
+
+            window.setTimeout(() => {
+                if (outcome === "accept") {
+                    slot.appendChild(tile);
+                    tile.querySelector(".flip-card-inner").classList.remove("rotate-y-180");
+                    applyPlacedTileLook(tile, slot);
+                    setTileState(tile, "default");
+                    ghostTile.remove();
+                    ghostTile = null;
+                    tile.style.opacity = "1";
+                    tile.style.visibility = "visible";
+                    isResolvingDrop = false;
+                    return;
+                }
+
+                ghostTile.style.top = `${slotRect.top + slotRect.height + 48}px`;
+                ghostTile.style.opacity = "0";
+                ghostTile.style.transform = "scale(0.82)";
+
+                window.setTimeout(() => {
+                    bankContainer.appendChild(tile);
+                    tile.querySelector(".flip-card-inner").classList.remove("rotate-y-180");
+                    clearPlacedTileLook(tile);
+                    setTileState(tile, "default");
+                    tile.style.opacity = "1";
+                    tile.style.visibility = "visible";
+
+                    ghostTile.remove();
+                    ghostTile = null;
+                    isResolvingDrop = false;
+                }, 190);
+            }, 220);
+        }
+
+        document.addEventListener("pointerdown", (event) => {
+            const tile = event.target.closest(".word-tile");
+            if (!tile || btnCheck.classList.contains("hidden") || isResolvingDrop) {
+                return;
+            }
+
+            event.preventDefault();
+            draggingTile = tile;
+            startX = event.clientX;
+            startY = event.clientY;
+            isDragging = false;
+            tile.classList.add("is-dragging");
+            resetTileMagnetism(tile);
+            setTileState(tile, "default");
+            tile.setPointerCapture(event.pointerId);
+        });
+
+        document.addEventListener("pointermove", (event) => {
+            if (!draggingTile) {
+                return;
+            }
+
+            const dx = event.clientX - startX;
+            const dy = event.clientY - startY;
+
+            if (!isDragging && Math.sqrt((dx * dx) + (dy * dy)) > 5) {
+                isDragging = true;
+                ghostTile = draggingTile.cloneNode(true);
+                ghostTile.style.position = "fixed";
+                ghostTile.style.left = "0";
+                ghostTile.style.top = "0";
+                ghostTile.style.zIndex = "1000";
+                ghostTile.style.opacity = "0.92";
+                ghostTile.style.pointerEvents = "none";
+                ghostTile.style.transform = "scale(1.06)";
+                document.body.appendChild(ghostTile);
+                draggingTile.style.opacity = "0.28";
+            }
+
+            if (isDragging && ghostTile) {
+                ghostTile.style.left = `${event.clientX - (ghostTile.offsetWidth / 2)}px`;
+                ghostTile.style.top = `${event.clientY - (ghostTile.offsetHeight / 2)}px`;
+
+                clearSlotPreviews();
+                clearGhostSlotState();
+
+                draggingTile.style.visibility = "hidden";
+                ghostTile.style.visibility = "hidden";
+                const elementBelow = document.elementFromPoint(event.clientX, event.clientY);
+                draggingTile.style.visibility = "visible";
+                ghostTile.style.visibility = "visible";
+
+                const targetSlot = elementBelow ? elementBelow.closest(".drop-slot") : null;
+                if (targetSlot) {
+                    targetSlot.classList.add("drag-over");
+                }
+            }
+        });
+
+        document.addEventListener("pointerup", (event) => {
+            if (!draggingTile) {
+                return;
+            }
+
+            draggingTile.releasePointerCapture(event.pointerId);
+
+            if (!isDragging) {
+                const inner = draggingTile.querySelector(".flip-card-inner");
+                inner.classList.toggle("rotate-y-180");
+            } else {
+                clearSlotPreviews();
+
+                if (ghostTile) {
+                    ghostTile.style.visibility = "visible";
+                }
+
+                draggingTile.style.opacity = "1";
+                draggingTile.style.visibility = "hidden";
+                const elementBelow = document.elementFromPoint(event.clientX, event.clientY);
+                draggingTile.style.visibility = "visible";
+
+                const targetSlot = elementBelow ? elementBelow.closest(".drop-slot") : null;
+                const targetBank = elementBelow ? elementBelow.closest("#word-bank") : null;
+
+                if (targetSlot) {
+                    const isCorrect = isCorrectSlotForTile(targetSlot, draggingTile);
+                    const mode = getPlayMode();
+                    const outcome = (mode === "practice" && !isCorrect) || (mode === "challenge" && !isCorrect)
+                        ? (mode === "practice" ? "reject" : "fall-through")
+                        : "accept";
+
+                    if (mode === "practice" && !isCorrect) {
+                        bankContainer.appendChild(draggingTile);
+                        draggingTile.querySelector(".flip-card-inner").classList.remove("rotate-y-180");
+                        clearPlacedTileLook(draggingTile);
+                        setTileState(draggingTile, "default");
+                        if (ghostTile) {
+                            ghostTile.remove();
+                            ghostTile = null;
+                        }
+                    } else {
+                        targetSlot.classList.add("absorb-preview");
+                        targetSlot.classList.add(isCorrect ? "absorb-preview-correct" : "absorb-preview-fail");
+                        isResolvingDrop = true;
+                        animateDropResolution(draggingTile, targetSlot, outcome === "accept" ? "accept" : "fall-through");
+                    }
+                } else if (targetBank) {
+                    bankContainer.appendChild(draggingTile);
+                    draggingTile.querySelector(".flip-card-inner").classList.remove("rotate-y-180");
+                    clearPlacedTileLook(draggingTile);
+                    setTileState(draggingTile, "default");
+                    if (ghostTile) {
+                        ghostTile.remove();
+                        ghostTile = null;
+                    }
+                } else if (ghostTile) {
+                    ghostTile.remove();
+                    ghostTile = null;
+                }
+            }
+
+            draggingTile.classList.remove("is-dragging");
+            resetTileMagnetism(draggingTile);
+            draggingTile = null;
+        });
+
+        function revealTilesTemporarily() {
+            const tiles = Array.from(document.querySelectorAll(".word-tile"));
+            const previousStates = tiles.map((tile) => tile.querySelector(".flip-card-inner").classList.contains("rotate-y-180"));
+
+            tiles.forEach((tile) => {
+                tile.querySelector(".flip-card-inner").classList.add("rotate-y-180");
+            });
+
+            setCoach("tone-warning", "Wenk!", "Kyk na die Engelse hulp en STOMPI-etiket op elke kaart.<br>(Use the English helper and STOMPI label.)");
+            showFeedback("Wenk: Onthou die volgorde S, v1, T, O, M, P, v2, I.", "tone-warning");
+
+            window.setTimeout(() => {
+                tiles.forEach((tile, index) => {
+                    if (!previousStates[index]) {
+                        tile.querySelector(".flip-card-inner").classList.remove("rotate-y-180");
+                    }
+                });
+            }, 1200);
+        }
+
+        function checkAnswer() {
+            const level = worksheets[currentWorksheetKey][currentLevelIndex];
+            const placedTiles = Array.from(document.querySelectorAll(".drop-slot .word-tile"));
+
+            if (placedTiles.length < level.words.length) {
+                setCoach("tone-warning", "Nog 'n bietjie", "Plaas eers al die woorde in die blokkies.<br>(Place all the words in the boxes first.)");
+                showFeedback("Plaas asseblief al die woorde in die blokkies! (Place all words in the boxes!)", "tone-warning");
+                return;
+            }
+
+            let isCorrect = true;
+
+            placedTiles.forEach((tile, index) => {
+                const slot = tile.closest(".drop-slot");
+                const expectedWord = level.words[index].afr;
+                const expectedStompi = tile.dataset.expectedStompi;
+                let tileCorrect = true;
+
+                setTileState(tile, "default");
+
+                if (slot.dataset.stompiId !== expectedStompi) {
+                    tileCorrect = false;
+                }
+
+                if (tile.dataset.word !== expectedWord) {
+                    tileCorrect = false;
+                }
+
+                if (tileCorrect) {
+                    setTileState(tile, "correct");
+                } else {
+                    setTileState(tile, "wrong");
+                    isCorrect = false;
+                    window.setTimeout(() => setTileState(tile, "default"), 1200);
+                }
+            });
+
+            if (isCorrect) {
+                if (!solvedCurrentLevel) {
+                    xp += 20;
+                    solvedCurrentLevel = true;
+                }
+
+                updateHud();
+                renderJourney();
+
+                setCoach("tone-success", "Fantasties!", "Jy het dit reg!<br>(You got it right!)");
+                showFeedback("Uitstekend! Mooi so! (Excellent! Well done!)", "tone-success");
+
+                document.querySelectorAll(".drop-slot").forEach((slot) => {
+                    if (slot.children.length > 0) {
+                        slot.classList.add("animate-pop");
+                        window.setTimeout(() => slot.classList.remove("animate-pop"), 420);
+                    }
+                });
+
+                btnCheck.classList.add("hidden");
+                btnNext.classList.remove("hidden");
+
+                placedTiles.forEach((tile, index) => {
+                    window.setTimeout(() => {
+                        tile.querySelector(".flip-card-inner").classList.add("rotate-y-180");
+                    }, 180 + (index * 70));
+                });
+            } else {
+                setCoach("tone-error", "Probeer weer", "Nog nie heeltemal reg nie.<br>(Not quite right yet.)");
+                showFeedback("Nog nie heeltemal reg nie. Probeer weer! (Not quite right. Try again!)", "tone-error");
+            }
+        }
+
+        btnHint.addEventListener("click", revealTilesTemporarily);
+        btnCheck.addEventListener("click", checkAnswer);
+        btnReset.addEventListener("click", () => {
+            if (btnReset.dataset.mode === "replay") {
+                loadLevel(0);
+                return;
+            }
+
+            loadLevel(currentLevelIndex);
+        });
+
+        btnNext.addEventListener("click", () => {
+            const totalSentences = worksheets[currentWorksheetKey].length;
+
+            if (currentLevelIndex < totalSentences - 1) {
+                loadLevel(currentLevelIndex + 1);
+            } else {
+                setCoach("tone-success", "Baie geluk!", "Jy het al die sinne voltooi!<br>(You finished all the sentences!)");
+                showFeedback("Baie geluk! Jy het al die sinne voltooi! (Congratulations! You finished all sentences!)", "tone-success");
+                btnNext.classList.add("hidden");
+                btnReset.dataset.mode = "replay";
+                btnReset.innerHTML = "<strong>Speel Weer</strong><span>Play again</span>";
+                solvedCurrentLevel = true;
+                renderJourney();
+            }
+        });
+
+        let titleFitFrame = 0;
+
+        function scheduleTitleFit() {
+            window.cancelAnimationFrame(titleFitFrame);
+            titleFitFrame = window.requestAnimationFrame(fitWorksheetTitles);
+        }
+
+        if (typeof ResizeObserver !== "undefined" && worksheetStrip) {
+            const titleResizeObserver = new ResizeObserver(() => {
+                scheduleTitleFit();
+            });
+            titleResizeObserver.observe(worksheetStrip);
+        } else {
+            window.addEventListener("resize", scheduleTitleFit);
+        }
+
+        updateWorksheetTabs();
+        fitWorksheetTitles();
+        loadLevel(0);
+    </script>
+</body>
+</html>
