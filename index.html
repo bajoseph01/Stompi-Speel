@@ -1132,38 +1132,43 @@
 
         .journey-sea {
             position: relative;
+            isolation: isolate;
             overflow: hidden;
-            min-height: 138px;
-            padding: 18px 24px;
-            border-radius: 30px;
+            min-height: 236px;
+            padding: 16px 18px 20px;
+            border-radius: 34px;
             background:
-                radial-gradient(circle at 16% 30%, rgba(255, 255, 255, 0.55), transparent 13%),
-                radial-gradient(circle at 84% 40%, rgba(255, 255, 255, 0.44), transparent 15%),
-                var(--ocean);
-            border: 2px solid rgba(108, 173, 235, 0.5);
-            box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.55), var(--shadow-tight);
+                linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0) 28%),
+                url("assets/journey-islands-v1.png");
+            background-position: center 74%;
+            background-repeat: no-repeat;
+            background-size: cover;
+            border: 2px solid rgba(108, 173, 235, 0.58);
+            box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.62), var(--shadow-tight);
         }
 
         .journey-sea::before,
         .journey-sea::after {
             content: "";
             position: absolute;
-            bottom: 0;
-            width: 180px;
-            height: 54px;
-            border-radius: 50% 50% 0 0;
-            background: linear-gradient(180deg, #7ecb73 0%, #4ba851 100%);
-            box-shadow: inset 0 10px 0 rgba(255, 255, 255, 0.12);
+            inset: 0;
+            pointer-events: none;
         }
 
         .journey-sea::before {
-            left: 22px;
+            z-index: 0;
+            background:
+                linear-gradient(180deg, rgba(245, 251, 255, 0.9) 0%, rgba(245, 251, 255, 0.34) 26%, rgba(245, 251, 255, 0) 56%),
+                radial-gradient(circle at 16% 12%, rgba(255, 255, 255, 0.56), transparent 24%),
+                radial-gradient(circle at 84% 14%, rgba(255, 255, 255, 0.44), transparent 23%);
         }
 
         .journey-sea::after {
-            right: 30px;
-            width: 210px;
-            background: linear-gradient(180deg, #b6cb76 0%, #7c9942 100%);
+            z-index: 0;
+            background:
+                linear-gradient(180deg, rgba(12, 66, 142, 0) 56%, rgba(9, 62, 136, 0.18) 100%),
+                radial-gradient(circle at 50% 100%, rgba(255, 255, 255, 0.18), transparent 38%);
+            mix-blend-mode: screen;
         }
 
         .journey-header {
@@ -1173,7 +1178,16 @@
             justify-content: space-between;
             align-items: center;
             gap: 14px;
-            margin-bottom: 14px;
+            width: min(100%, 640px);
+            margin-bottom: 18px;
+            padding: 14px 18px;
+            border-radius: 24px;
+            border: 1px solid rgba(132, 189, 239, 0.44);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.86), rgba(236, 247, 255, 0.58));
+            box-shadow:
+                0 14px 30px rgba(26, 74, 133, 0.14),
+                inset 0 1px 0 rgba(255, 255, 255, 0.76);
+            backdrop-filter: blur(10px);
         }
 
         .journey-header strong {
@@ -1197,37 +1211,51 @@
             z-index: 1;
             display: grid;
             grid-template-columns: repeat(var(--track-count, 10), minmax(0, 1fr));
-            align-items: center;
-            gap: 12px;
+            align-items: end;
+            min-height: 122px;
+            padding: 42px clamp(78px, 7vw, 118px) 10px;
+            gap: clamp(10px, 1.1vw, 18px);
         }
 
         .journey-track::before {
             content: "";
             position: absolute;
-            left: 14px;
-            right: 14px;
-            top: 50%;
-            height: 8px;
+            left: clamp(84px, 7vw, 126px);
+            right: clamp(84px, 7vw, 126px);
+            top: 58px;
+            height: 6px;
             border-radius: 999px;
-            transform: translateY(-50%);
-            background: rgba(255, 255, 255, 0.78);
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.26), rgba(255, 255, 255, 0.82) 12%, rgba(255, 255, 255, 0.82) 88%, rgba(255, 255, 255, 0.26));
+            box-shadow:
+                0 0 0 1px rgba(40, 110, 185, 0.12),
+                0 8px 22px rgba(24, 92, 161, 0.16);
         }
 
         .journey-node {
+            --node-scale: 1;
+            --bob-base-y: 0px;
+            --bob-rise: -5px;
+            --bob-dip: 4px;
             position: relative;
             z-index: 1;
             display: grid;
             place-items: center;
-            width: 42px;
-            height: 42px;
+            width: 48px;
+            height: 48px;
             margin: 0 auto;
             border-radius: 50%;
-            border: 3px solid rgba(255, 255, 255, 0.86);
-            background: rgba(255, 255, 255, 0.72);
-            color: #2a528d;
-            font-size: 1rem;
+            border: 3px solid rgba(255, 255, 255, 0.92);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(226, 240, 255, 0.88));
+            color: #255089;
+            font-size: 1.02rem;
             font-weight: 900;
-            box-shadow: 0 10px 18px rgba(43, 86, 148, 0.18);
+            box-shadow:
+                0 14px 26px rgba(17, 70, 136, 0.24),
+                0 0 0 6px rgba(255, 255, 255, 0.14);
+            backdrop-filter: blur(6px);
+            animation: journey-node-bob var(--bob-duration, 4.8s) ease-in-out infinite;
+            animation-delay: var(--bob-delay, 0s);
+            will-change: transform;
         }
 
         .journey-node.is-complete {
@@ -1236,14 +1264,20 @@
         }
 
         .journey-node.is-current {
+            --node-scale: 1.14;
+            --bob-base-y: -4px;
+            --bob-rise: -8px;
+            --bob-dip: 2px;
             background: linear-gradient(180deg, #ffe85c 0%, #ffb71c 100%);
             color: #734509;
-            transform: scale(1.12);
+            box-shadow:
+                0 18px 30px rgba(230, 157, 28, 0.34),
+                0 0 0 7px rgba(255, 255, 255, 0.18);
         }
 
         .journey-node.is-locked {
-            background: rgba(239, 246, 255, 0.8);
-            color: #92a6c4;
+            background: linear-gradient(180deg, rgba(245, 249, 255, 0.86), rgba(219, 232, 246, 0.8));
+            color: #8aa3c4;
         }
 
         .treasure-icon {
@@ -1252,10 +1286,27 @@
             justify-self: end;
             margin-left: auto;
             font-size: 2rem;
+            filter: drop-shadow(0 10px 18px rgba(226, 146, 18, 0.28));
         }
 
         .animate-pop {
             animation: pop 0.4s ease-out;
+        }
+
+        @keyframes journey-node-bob {
+            0%,
+            100% {
+                transform: translateY(var(--bob-base-y)) scale(var(--node-scale));
+            }
+            22% {
+                transform: translateY(calc(var(--bob-base-y) + var(--bob-rise))) scale(var(--node-scale));
+            }
+            48% {
+                transform: translateY(calc(var(--bob-base-y) + (var(--bob-dip) * 0.55))) scale(var(--node-scale));
+            }
+            71% {
+                transform: translateY(calc(var(--bob-base-y) + var(--bob-dip))) scale(var(--node-scale));
+            }
         }
 
         @keyframes pop {
@@ -1286,6 +1337,21 @@
                 grid-template-columns: repeat(3, minmax(0, 1fr));
                 align-items: start;
             }
+
+            .journey-sea {
+                min-height: 212px;
+                background-position: center 76%;
+            }
+
+            .journey-track {
+                padding-left: 56px;
+                padding-right: 56px;
+            }
+
+            .journey-track::before {
+                left: 62px;
+                right: 62px;
+            }
         }
 
         @media (max-width: 900px) {
@@ -1311,6 +1377,40 @@
             .journey-header {
                 flex-direction: column;
                 align-items: stretch;
+            }
+
+            .journey-sea {
+                min-height: 188px;
+                padding: 12px 12px 16px;
+                background-position: center 78%;
+            }
+
+            .journey-header {
+                width: 100%;
+                margin-bottom: 12px;
+                padding: 12px 14px;
+            }
+
+            .journey-track {
+                min-height: 88px;
+                padding: 20px 22px 4px;
+                gap: 8px;
+            }
+
+            .journey-track::before {
+                left: 26px;
+                right: 26px;
+                top: 34px;
+            }
+
+            .journey-node {
+                width: 35px;
+                height: 35px;
+                border-width: 2px;
+                font-size: 0.84rem;
+                box-shadow:
+                    0 10px 18px rgba(17, 70, 136, 0.22),
+                    0 0 0 4px rgba(255, 255, 255, 0.12);
             }
 
             .action-button {
@@ -1925,14 +2025,30 @@
         function renderJourney() {
             const totalSentences = worksheets[currentWorksheetKey].length;
             const completedThrough = solvedCurrentLevel ? currentLevelIndex + 1 : currentLevelIndex;
+            const bobProfiles = [
+                { duration: 5.6, delay: -1.4, rise: -4, dip: 3, base: 0 },
+                { duration: 4.8, delay: -2.2, rise: -6, dip: 4, base: 1 },
+                { duration: 5.2, delay: -0.8, rise: -5, dip: 3, base: -1 },
+                { duration: 6.1, delay: -3.1, rise: -7, dip: 4, base: 1 },
+                { duration: 4.5, delay: -1.1, rise: -4, dip: 3, base: -1 },
+                { duration: 5.9, delay: -2.7, rise: -6, dip: 5, base: 0 },
+                { duration: 4.9, delay: -0.6, rise: -5, dip: 3, base: 1 },
+                { duration: 5.4, delay: -3.4, rise: -7, dip: 4, base: -1 }
+            ];
 
             journeyTrack.style.setProperty("--track-count", totalSentences);
             journeyTrack.innerHTML = "";
 
             for (let i = 0; i < totalSentences; i += 1) {
                 const node = document.createElement("div");
+                const bobProfile = bobProfiles[i % bobProfiles.length];
                 node.className = "journey-node";
                 node.textContent = String(i + 1);
+                node.style.setProperty("--bob-duration", `${bobProfile.duration}s`);
+                node.style.setProperty("--bob-delay", `${bobProfile.delay}s`);
+                node.style.setProperty("--bob-rise", `${bobProfile.rise}px`);
+                node.style.setProperty("--bob-dip", `${bobProfile.dip}px`);
+                node.style.setProperty("--bob-base-y", `${bobProfile.base}px`);
 
                 if (i < completedThrough) {
                     node.classList.add("is-complete");

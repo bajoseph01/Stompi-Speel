@@ -1,0 +1,13 @@
+{
+  "name": "stompi-speel",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "screenshot": "node scripts/screenshot.mjs",
+    "screenshot:desktop": "node scripts/screenshot.mjs --width 1440 --height 1024 --out screenshots/stompi-desktop.png",
+    "screenshot:mobile": "node scripts/screenshot.mjs --width 430 --height 932 --out screenshots/stompi-mobile.png"
+  },
+  "devDependencies": {
+    "playwright": "latest"
+  }
+}
